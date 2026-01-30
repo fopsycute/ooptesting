@@ -149,6 +149,7 @@ private function getRedirectUrl($userType) {
 }
 
 
+
 }
 
 // Authentication class
@@ -169,6 +170,16 @@ class Auth {
         $this->checkLogin();
     }
 
+      public function logout() {
+
+        foreach ($this->cookieMap as $cookie) {
+            if (isset($_COOKIE[$cookie])) {
+                setcookie($cookie, '', time() - 3600, '/');
+            }
+        }
+
+        return true;
+    }
     private function checkLogin() {
 
         $cookieName = $this->cookieMap[$this->userType] ?? null;
